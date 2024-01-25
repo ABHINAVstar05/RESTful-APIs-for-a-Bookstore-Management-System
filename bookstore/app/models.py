@@ -9,7 +9,7 @@ class bookDetails(models.Model) :
     ISBN = models.IntegerField(primary_key = True)
     title = models.CharField(max_length = 100)
     author = models.CharField(max_length = 100)
-    price = models.IntegerField()
+    price = models.FloatField()
     quantity = models.IntegerField()
     
     def __str__(self):
