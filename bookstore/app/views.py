@@ -73,3 +73,22 @@ def updateBookDetails(request) :
         return Response(serialized.errors)
         
     return Response({'message': 'No book found having given ISBN number.'})
+
+
+"""
+** API endpoint for deleting a book. **
+used to delete a book by its ISBN number.
+"""
+@api_view(['DELETE', ])
+def deleteBook(request) :
+    data = request.data
+    isbn = data['ISBN']
+
+    try :
+        obj = bookDetails.objects.get(ISBN = isbn)
+        obj.delete()
+        return Response({'Message': 'Book deleted successfully.'})
+    
+    except bookDetails.DoesNotExist :
+        errorMessage = 'Book with given ISBN number does not exist.'
+        return Response(errorMessage)
