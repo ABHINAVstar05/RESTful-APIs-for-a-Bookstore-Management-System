@@ -66,14 +66,14 @@ used to updating book details by its ISBN number.
 """
 @api_view(['PUT', ])
 def updateBookDetails(request) :
-    
+    data = request.data
+
     #Added basic authentication to restrict customers from updating books to the DB.
     user = data['user']
     if(user == 'Customers') :
         return Response({'Alert': 'Only owners can update book details.'})
     data.pop('user')
 
-    data = request.data
     isbn = data['ISBN']
 
     if bookDetails.objects.filter(ISBN = isbn) :
@@ -95,6 +95,7 @@ used to delete a book by its ISBN number.
 """
 @api_view(['DELETE', ])
 def deleteBook(request) :
+    data = request.data
 
     #Added basic authentication to restrict customers from deleting books from the DB.
     user = data['user']
@@ -102,7 +103,6 @@ def deleteBook(request) :
         return Response({'Alert': 'Only owners can delete books.'})
     data.pop('user')
 
-    data = request.data
     isbn = data['ISBN']
 
     try :
