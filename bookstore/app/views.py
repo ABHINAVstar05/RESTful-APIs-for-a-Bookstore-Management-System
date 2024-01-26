@@ -51,3 +51,25 @@ def retrieveSpecificBook(request) :
         return Response({'Book details corresponding to the given ISBN number are' : serialized.data})
         
     return Response({'message': 'No book found having given ISBN number.'})
+
+
+"""
+** API endpoint for updating book details. **
+used to updating book details by its ISBN number.
+"""
+@api_view(['PUT', ])
+def updateBookDetails(request) :
+    data = request.data
+    isbn = data['ISBN']
+
+    if bookDetails.objects.filter(ISBN = isbn) :
+        obj = bookDetails.objects.get(ISBN = isbn)
+        serialized = bookDetailsSerializer(obj, data)
+        
+        if serialized.is_valid() :
+            serialized.save()
+            return Response({'Data updated successfully' : serialized.data})
+        
+        return Response(serialized.errors)
+        
+    return Response({'message': 'No book found having given ISBN number.'})
