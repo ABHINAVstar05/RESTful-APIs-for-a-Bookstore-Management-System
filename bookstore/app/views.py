@@ -34,3 +34,20 @@ def retrieveAllBooks(request) :
     books = bookDetails.objects.all()
     serialized = bookDetailsSerializer(books, many = True)
     return Response(serialized.data)
+
+
+"""
+** API endpoint for retrieving specific book. **
+used to retrieve a specific book by its ISBN number.
+"""
+@api_view(['POST', ])
+def retrieveSpecificBook(request) :
+    data = request.data
+    isbn = data['ISBN']
+    
+    if bookDetails.objects.filter(ISBN = isbn) :
+        obj = bookDetails.objects.get(ISBN = isbn)
+        serialized = bookDetailsSerializer(obj)
+        return Response({'Book details corresponding to the given ISBN number are' : serialized.data})
+        
+    return Response({'message': 'No book found having given ISBN number.'})
