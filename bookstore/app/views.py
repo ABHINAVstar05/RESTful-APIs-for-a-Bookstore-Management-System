@@ -16,6 +16,13 @@ used to add new books to the database.
 @api_view(['POST', ])
 def addBook(request) :
     data = request.data
+    
+    #Added basic authentication to restrict customers from adding books to the DB.
+    user = data['user']
+    if(user == 'Customers') :
+        return Response({'Alert': 'Only owners can add books.'})
+    data.pop('user')
+
     deserialized = bookDetailsSerializer(data = data)
     if deserialized.is_valid() :
         deserialized.save()
@@ -59,6 +66,13 @@ used to updating book details by its ISBN number.
 """
 @api_view(['PUT', ])
 def updateBookDetails(request) :
+    
+    #Added basic authentication to restrict customers from updating books to the DB.
+    user = data['user']
+    if(user == 'Customers') :
+        return Response({'Alert': 'Only owners can update book details.'})
+    data.pop('user')
+
     data = request.data
     isbn = data['ISBN']
 
@@ -81,6 +95,13 @@ used to delete a book by its ISBN number.
 """
 @api_view(['DELETE', ])
 def deleteBook(request) :
+
+    #Added basic authentication to restrict customers from deleting books from the DB.
+    user = data['user']
+    if(user == 'Customers') :
+        return Response({'Alert': 'Only owners can delete books.'})
+    data.pop('user')
+
     data = request.data
     isbn = data['ISBN']
 
