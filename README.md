@@ -4,7 +4,7 @@
 ## Setup
 *Follow the below commands in terminal for a successful setup*
 
-'''
+```
 python3 -m venv virtual_env
 
 virtual_env/Scripts/activate
@@ -20,7 +20,7 @@ cd bookstore
 python manage.py startapp app
 
 python manage.py runserver
-'''
+```
 
 ## Overview:
 Developed RESTful APIs using Python-Django for *bookstore management system* which allows users to add, retrieve, update, and delete book information.
